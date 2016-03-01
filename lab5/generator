@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# Uncomment this line to use a not-so-random generator that generates a perfect Shannon entropy score
+python not_random.py | head -c 4194304
+
+# Uncomment this line to use my implementation of a random bytestream generator
+# python generator.py | head -c 4194304
+

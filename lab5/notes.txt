@@ -1,0 +1,15 @@
+char is signed (-128 to 127)
+so use unsigned char (0 - 255)
+
+running
+===
+./randgenerator | head | entropy
+./randgenerator | head > test (?)
+
+we have to document more shit this time (even SO)
+
+1. measures from 3 different file sizes (byte generator)
+2. measures from 3 different sample files (esp. 3 different file types)
+- think about digital files, which often use compression. a compressed filetype will have higher entropy
+- keep file size consistent
+3. discuss your results and how you generated your byte stream

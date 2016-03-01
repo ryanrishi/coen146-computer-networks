@@ -1,0 +1,96 @@
+/*
+ * server.c
+ *
+ * init struct
+ * open socket
+ * call bind
+ * forever loop {
+ * 	  recv data
+ * 	  print data
+ * 	  read from stdin
+ * 	  send data
+ * }
+ */
+
+#include <stdio.h>
+#include <netinet/in.h>
+#include <strings.h>
+#include <assert.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <errno.h>
+#include <stdbool.h>
+
+struct packet {
+	unsigned short seq;
+	unsigned short checksum;
+	char msg[64];
+};
+
+int main(int argc, char * argv[]) {
+	struct sockaddr_in server;
+	bzero((char *) &server, sizeof(server));
+	server.sin_family = AF_INET;
+	server.sin_addr.s_addr = INADDR_ANY;
+	server.sin_port = htons(5080);
+	socklen_t socket_length = sizeof(server);
+	// printf("%d", socket_length);
+
+	int sockfd = socket(PF_INET, SOCK_DGRAM, 0);
+
+	bind(sockfd, (struct sockaddr *) &server, sizeof(server));
+	
+	int packets_recvd = 0;
+
+	bool corrupt_packet = false;
+
+	for (;;) {
+		/* recieve data */
+		struct packet p;
+		int num_bytes = recvfrom(sockfd, &p, /*size of a packet*/ 68, /*flags*/ 0, (struct sockaddr *) &server, &socket_length);
+		//printf("num_bytes\t%d\n", num_bytes);
+		printf("Packet recvd\t%d\n", p.seq);
+
+		// print packet (debug)
+		//printf("p.msg\t%s\n", p.msg);
+		//printf("p.seq\t%d\n", p.seq);
+		//printf("p.checksum\t%d\n", p.checksum);		
+		//printf("sizeof(p)\t%d\n", sizeof(p));
+
+		/* check packet */
+		if (p.seq == packets_recvd) {
+			packets_recvd++;
+			p.seq++;
+			// intentionally corrupt sequence number
+			if (p.seq == 4 && corrupt_packet) {
+				packets_recvd--;	//	because it was incremented earlier
+				p.seq = 3;
+				corrupt_packet = false;
+			}
+			/* convert message to uppercase */
+			int i = 0;
+			while (p.msg[i]) {
+				p.msg[i] = toupper(p.msg[i]);
+				i++;
+			}
+			/* print packet contents */
+			printf("p.msg\t%s\n", p.msg);
+			printf("p.seq\t%d\n", p.seq);
+			printf("p.checksum\t%d\n", p.checksum);
+
+		}
+		// else do not modify contents
+
+		/* send data */		
+		sendto(sockfd, &p, sizeof(p), 0, (struct sockaddr *) &server, sizeof(server));
+		printf("Packet sent\t%d\n", p.seq);
+	}
+
+	close(socket);
+
+	return 0;
+}
+
+
