@@ -4,18 +4,44 @@ Winter 2016
 
 Measuring and Generating Random Data Streams
 
-DUE: 8 days from the time lab is assigned 
+DUE: 8 days from the time lab is assigned
 
-In this lab, you are going to implement two simple programs. One will measure the degree of randomness in a data stream, while the other will generate such a stream.
+In this lab, you are going to implement two simple programs. One will measure
+the degree of randomness in a data stream, while the other will generate such a
+stream.
 
-In our lectures we’ve discussed the importance of randomness in communications security. What we will now do is quantify how random a sequence of bytes truly is. To this end, you will write a small program that reads input from stdin and calculates the entropy of the byte sequence that has been read. You may write this program in C or python or Java, but it must be submitted as part of your assignment. An implementation of such a program and brief discussion of entropy can be found at:
+In our lectures we’ve discussed the importance of randomness in communications
+security. What we will now do is quantify how random a sequence of bytes truly
+is. To this end, you will write a small program that reads input from stdin and
+calculates the entropy of the byte sequence that has been read. You may write
+this program in C or python or Java, but it must be submitted as part of your
+assignment. An implementation of such a program and brief discussion of entropy
+can be found at:
 
-http://blogs.cisco.com/security/on_information_entropy/ (Links to an external site.)
+http://blogs.cisco.com/security/on_information_entropy/ (Links to an external
+site.)
 
-The other program you will write is a random byte generator. All it does is print individual bytes (char in C) of your choosing. How you choose them is up to you, but your goal is to produce as random a sequence of bytes as you can. Your generator will be used as input to the “head” utility to generate a file of a fixed size. Specifically, if your generator program is called randgenerator(and your entropy program is called entropyCalculator), then we could use “randgenerator | head -c 4194304 > testfile” to generate a testfile of size 4MB, or we will simply run “randgenerator | head -c <filesize> | entropyCalcultor” to evaluate your programs using <filesize> amount of data.
+The other program you will write is a random byte generator. All it does is
+print individual bytes (char in C) of your choosing. How you choose them is up
+to you, but your goal is to produce as random a sequence of bytes as you can.
+Your generator will be used as input to the “head” utility to generate a file of
+a fixed size. Specifically, if your generator program is called randgenerator
+(and your entropy program is called entropyCalculator), then we could use
+“randgenerator | head -c 4194304 > testfile” to generate a testfile of size 4MB,
+or we will simply run “randgenerator | head -c <filesize> | entropyCalcultor”
+to evaluate your programs using <filesize> amount of data.
 
-Submit well commented generator and entropy code, and be sure to cite any sources that you use (especially if you make use of the sample code from Cisco). Include measurements of entropy for different file sizes using your generator program. But also include the results of measuring the entropy of at least three sample files of your choosing. For example, testing an image file that is in a compressed format would be expected to produce a higher entropy value than a file that is all zeros. As part of your README, be sure to discuss your results for these three files in addition to how you chose to generate the random byte stream.
+Submit well commented generator and entropy code, and be sure to cite any
+sources that you use (especially if you make use of the sample code from Cisco).
+Include measurements of entropy for different file sizes using your generator
+program. But also include the results of measuring the entropy of at least three
+sample files of your choosing. For example, testing an image file that is in a
+compressed format would be expected to produce a higher entropy value than a
+file that is all zeros. As part of your README, be sure to discuss your results
+for these three files in addition to how you chose to generate the random byte
+stream.
 
-BONUS: A 10% bonus will be awarded to the top three students who can generate the most random stream of bytes.
+BONUS: A 10% bonus will be awarded to the top three students who can generate
+the most random stream of bytes.
 
-Grade: 80% code submission, 20% demo/Q&A 
+Grade: 80% code submission, 20% demo/Q&A

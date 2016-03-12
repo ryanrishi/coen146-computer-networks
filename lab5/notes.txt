@@ -13,3 +13,6 @@ we have to document more shit this time (even SO)
 - think about digital files, which often use compression. a compressed filetype will have higher entropy
 - keep file size consistent
 3. discuss your results and how you generated your byte stream
+
+10% bonus to top 3 students with highest entropy
+for 1MB, 7.39-7.49. 8 is hard, but possible
